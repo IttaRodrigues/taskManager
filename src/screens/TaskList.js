@@ -10,10 +10,85 @@ import Task from '../components/Task'
 
 export default function TaskList(){
 
-    const tasks = [
+    const tasks = 
+    [
+    
         {
+            id: Math.random(),
+            desc: 'Elaborar o Mer do TCC',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Ajustar o FIGMA',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Desenvolver o Backend do sistema',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Desenvolver o Backend do sistema',
+            estimateAt: new Date(),
+         
+          doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Desenvolver o Backend do sistema',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Desenvolver o Backend do sistema',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Elaborar o Mer do TCC',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Ajustar o FIGMA',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Desenvolver o Backend do sistema',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Desenvolver o Backend do sistema',
+            estimateAt: new Date(),
+         
+          doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Desenvolver o Backend do sistema',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
+        {
+            id: Math.random(),
+            desc: 'Desenvolver o Backend do sistema',
+            estimateAt: new Date(),
+            doneAt: new Date()
+        },
 
-        }
+        
     ]
 
     const userTimeZone = moment.tz.guess(); // Detecta o fuso horario do dispositivo
