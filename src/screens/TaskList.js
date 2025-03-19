@@ -17,19 +17,19 @@ export default function TaskList(){
             id: Math.random(),
             desc: 'Elaborar o Mer do TCC',
             estimateAt: new Date(),
-            doneAt: new Date()
+            doneAt: null
         },
         {
             id: Math.random(),
             desc: 'Ajustar o FIGMA',
             estimateAt: new Date(),
-            doneAt: new Date()
+            doneAt: null
         },
         {
             id: Math.random(),
             desc: 'Desenvolver o Backend do sistema',
             estimateAt: new Date(),
-            doneAt: new Date()
+            doneAt: null
         },
         {
             id: Math.random(),
@@ -86,14 +86,24 @@ export default function TaskList(){
             desc: 'Desenvolver o Backend do sistema',
             estimateAt: new Date(),
             doneAt: new Date()
-        },
-
-        
+        },        
     ]
 
     const userTimeZone = moment.tz.guess(); // Detecta o fuso horario do dispositivo
     const today = moment().tz('America/Sao_Paulo').locale('pt-br').format('ddd, D [de] MMMM')
     // const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
+
+    toggleTask = taskId => {
+        const taskList = [...tasks]
+        TaskList.array.forEach(element => {
+            if (taskId.id === taskId){
+                task.doneAt = task.doneAt ? null : new Date()
+            }
+            
+        }); 
+
+    tasks = taskList
+}
 
     return(
         <View style={styles.container}>
