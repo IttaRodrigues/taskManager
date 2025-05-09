@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react"
+import { useEffect, useState } from "react"
 import { Text, View, StyleSheet, ImageBackground, TouchableOpacity, FlatList } from "react-native"
 
 import Icon from "react-native-vector-icons/FontAwesome"
@@ -7,61 +7,56 @@ import moment from "moment-timezone"
 import 'moment/locale/pt-br'
 
 import todayImage from '../../assets/imgs/today.jpg'
-import Task from '../components/Task'
+import Task from "../components/Task"
 import AddTask from "./AddTask"
 
-    const tasksDB = 
-    [
-    
-        {
-            id: Math.random(),
-            desc: 'Elaborar o Mer do TCC',
-            estimateAt: new Date(),
-            doneAt: null
-        },
-        {
-            id: Math.random(),
-            desc: 'Ajustar o FIGMA',
-            estimateAt: new Date(),
-            doneAt: null
-        },
-        {
-            id: Math.random(),
-            desc: 'Desenvolver o Backend do sistema',
-            estimateAt: new Date(),
-            doneAt: null
-        }        
-    ]
-      
-    export default function TaskList() {
+const taskDB = [
+    {
+        id: Math.random(),
+        desc: 'Elaborar o MER do TCC',
+        estimateAt: new Date(),
+        doneAt: new Date()
+    },
+    {
+        id: Math.random(),
+        desc: 'Ajustar o FIGMA',
+        estimateAt: new Date(),
+        doneAt: new Date()
+    },
+    {
+        id: Math.random(),
+        desc: 'Desenvolver o Backend do sistema',
+        estimateAt: new Date(),
+        doneAt: null
+    },
+]
 
-    const [tasks, setTasks] = useState([...tasksDB])
+export default function TaskList() {
+
+    const [tasks, setTasks] = useState([...taskDB])
     const [showDoneTasks, setShowDoneTasks] = useState(true)
-    const [visibleTasks, setVisibleTasks] = useState ([...tasks])
-    const [showAddTask, setShowAddTask ] = useState(false)
+    const [visibleTasks, setVisibleTasks] = useState([...tasks])
+    const [showAddTask, setShowAddTask] = useState(false)
 
     const userTimeZone = moment.tz.guess(); // Detecta o fuso horario do dispositivo
     const today = moment().tz('America/Sao_Paulo').locale('pt-br').format('ddd, D [de] MMMM')
     // const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
 
     useEffect(() => {
-        filterTasks() 
-    }, [showDoneTasks])
-
-   
+        filterTasks()
+    }, [showDoneTasks, tasks])
 
     const toggleTask = taskId => {
         const taskList = [...tasks]
         taskList.forEach(task => {
-            if (task.id === taskId){
+            if (task.id === taskId) {
                 task.doneAt = task.doneAt ? null : new Date()
             }
-            
-        }); 
+        });
 
         setTasks(taskList)
         filterTasks()
-}
+    }
 
     const toggleFilter = () => {
         setShowDoneTasks(!showDoneTasks)
@@ -69,25 +64,43 @@ import AddTask from "./AddTask"
 
     const filterTasks = () => {
         let visibleTasks = null
-        if (showDoneTasks) {
+
+        if(showDoneTasks){
             visibleTasks = [...tasks]
 
         } else {
             const pending = task => task.doneAt === null
             visibleTasks = tasks.filter(pending)
         }
+
         setVisibleTasks(visibleTasks)
     }
 
-    return(
-        <View style={styles.container}>
-            
-            <AddTask isVisible={showAddTask} onCancel={() => setShowAddTask(false)}/> 
+    const addTask = newTask => {
+        if(!newTask.desc || !newTask.desc.trim()){
+            Alert.alert('Dados Inválidos', 'Descrição não informada!')
+        }
 
+        const tempTasks = [...tasks]
+        tempTasks.push({
+            id: Math.random(),
+            desc: newTask.desc,
+            estimateAt: newTask.date,
+            doneAt: null
+        })
+        setTasks(tempTasks)
+        setShowAddTask(false)
+    }
+
+    return (
+        <View style={styles.container}>
+            <AddTask isVisible={showAddTask} onCancel={() => setShowAddTask(false)}
+                onSave={addTask}
+                />
             <ImageBackground source={todayImage} style={styles.background}>
                 <View style={styles.iconBar}>
                     <TouchableOpacity onPress={toggleFilter}>
-                        <Icon name={showDoneTasks ? 'eye' : 'eye-slash'} size={20} color={'#fff'}/>
+                        <Icon name={showDoneTasks ? 'eye' : 'eye-slash'} size={20} color={'#fff'} />
                     </TouchableOpacity>
                 </View>
 
@@ -96,15 +109,15 @@ import AddTask from "./AddTask"
                     <Text style={styles.subtitle}>{today}</Text>
                 </View>
             </ImageBackground>
+
             <View style={styles.taskList}>
                 <FlatList
-                data={visibleTasks}
-                keyExtractor={item => `${item.id}`}
-                renderItem={({item}) => <Task {...item} onToggleTask={toggleTask} />}
-                
+                    data={visibleTasks}
+                    keyExtractor={item => `${item.id}`}
+                    renderItem={({ item }) => <Task {...item} onToggleTask={toggleTask} />}
                 />
-          
             </View>
+
             <TouchableOpacity
                 style={styles.addButton}
                 activeOpacity={0.7}
@@ -113,26 +126,30 @@ import AddTask from "./AddTask"
                 <Icon name="plus" size={20} color={'#fff'} />
 
             </TouchableOpacity>
-
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1},
+        flex: 1
+    },
     background: {
-        flex: 3},
+        flex: 3
+    },
     taskList: {
-        flex: 7},
+        flex: 7
+    },
     titleBar: {
         flex: 1,
-        justifyContent: 'flex-end'},
+        justifyContent: 'flex-end'
+    },
     title: {
         color: 'white',
         fontSize: 50,
         marginLeft: 20,
-        marginBottom: 20},
+        marginBottom: 20
+    },
     subtitle: {
         color: 'white',
         fontSize: 20,
